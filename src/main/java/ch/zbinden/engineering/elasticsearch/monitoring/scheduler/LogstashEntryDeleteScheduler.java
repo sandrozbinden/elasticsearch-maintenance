@@ -1,0 +1,29 @@
+package ch.zbinden.engineering.elasticsearch.monitoring.scheduler;
+
+import org.elasticsearch.index.query.MatchQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+
+import ch.zbinden.engineering.elasticsearch.monitoring.service.ElasticSearchService;
+
+@Component
+public class LogstashEntryDeleteScheduler {
+
+	private static final Logger LOG = LoggerFactory.getLogger(LogstashEntryDeleteScheduler.class);
+
+	@Autowired
+	private ElasticSearchService esService;
+
+	@Scheduled(cron = "${elasticsearch.entry.delete.cron}")
+	public void deleteIndicies() {
+		LOG.info("Will delete unimported elasticsearch entries to free disk space");
+		MatchQueryBuilder matchQuery = QueryBuilders.matchQuery("host", "193.169.83.1");
+		esService.deleteByQuery(matchQuery);
+		esService.expungeDeletes();
+	}
+
+}

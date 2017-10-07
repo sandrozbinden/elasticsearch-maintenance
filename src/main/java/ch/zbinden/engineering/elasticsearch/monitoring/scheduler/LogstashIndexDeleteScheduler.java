@@ -32,7 +32,7 @@ public class LogstashIndexDeleteScheduler {
 	public void deleteIndicies() {
 		LocalDate dateToKeepIndex = LocalDate.now().minus(maxDaysToKeep, ChronoUnit.DAYS);
 		LOG.info("Will delete indicies older than {}", dateToKeepIndex);
-		Set<IndexMetaData> indicies = esService.getLogstashIndicies();
+		Set<IndexMetaData> indicies = esService.getLogstashIndexMetaDatas();
 		Set<IndexMetaData> indiciesToDelete = indicies.stream()
 				.filter(index -> dateToKeepIndex.isAfter(
 						Instant.ofEpochMilli(index.getCreationDate()).atZone(ZoneId.systemDefault()).toLocalDate()))
