@@ -20,5 +20,4 @@ public interface ElasticSearchService {
 	void expungeDeletes();
 
 	void deleteByQuery(QueryBuilder matchQuery);
-
 }

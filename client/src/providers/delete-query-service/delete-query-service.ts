@@ -1,26 +1,35 @@
-import { DeleteQueryResponse } from './../../model/delete-queries';
+import { DeleteQueryResponse, Deletequery } from './../../model/delete-query-response';
 
 import { Injectable } from '@angular/core';
-import { Http, Headers, Response, RequestOptions } from '@angular/http';
+import { Http, Headers, Response } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class DeleteQueryService {
 
+  public readonly proxyPrefix: string = 'http://localhost:8080';
+
   constructor(public http: Http) { }
 
   public getDeleteQueries(): Observable<DeleteQueryResponse> {
-    return this.http.get('/deletequery').map(response => response.json());
+    return this.http.get('/deletequery?size=50').map(response => response.json());
   }
 
-  public addDeleteQuery(deleteQuery: DeleteQuery): Observable<Response> {
+  public getNextDeleteQueries(deleteQueryPageURL: string): Observable<DeleteQueryResponse> {
+    return this.http.get(this.sanitizeURL(deleteQueryPageURL)).map(response => response.json());
+  }
+
+  public addDeleteQuery(deleteQuery: Deletequery): Observable<Response> {
     const headers = new Headers({'Content-Type': 'application/json'});
     return this.http.post('/deletequery', JSON.stringify(deleteQuery), { headers: headers });
   }
 
-  public removeDeleteQuery(deleteQuery: DeleteQuery): Observable<Response> {
-    const headers = new Headers({'Content-Type': 'application/json'});
-    return this.http.delete('/deletequery/' + deleteQuery.id);
+  public removeDeleteQuery(deleteQueryURL: string): Observable<Response> {
+    return this.http.delete(this.sanitizeURL(deleteQueryURL));
+  }
+
+  public sanitizeURL(deleteQueryURL: string): string {
+    return deleteQueryURL.replace(this.proxyPrefix, '');
   }
 }

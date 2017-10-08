@@ -1,3 +1,4 @@
+import { IndexService } from './../providers/index-service/index-service';
 import { AddDeleteQueryPage } from './../pages/add-delete-query/add-delete-query';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -42,6 +43,7 @@ import { HttpModule } from '@angular/http';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     DeleteQueryService,
+    IndexService
   ]
 })
 export class AppModule {}

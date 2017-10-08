@@ -1,4 +1,6 @@
-import { DeleteQuery } from './../../model/delete-query';
+import { IndexField } from './../../model/index-field-response';
+import { IndexService } from './../../providers/index-service/index-service';
+import { Deletequery } from './../../model/delete-query-response';
 import { DeleteQueryService } from './../../providers/delete-query-service/delete-query-service';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
@@ -15,8 +17,11 @@ export class AddDeleteQueryPage {
 
   public deleteQueryForm: FormGroup;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public deleteQueryService: DeleteQueryService, public alertCtrl: AlertController) {
+  public indexFields: IndexField[] = [];
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public deleteQueryService: DeleteQueryService, public alertCtrl: AlertController, public indexService: IndexService) {
     this.initFormData();
+    this.initFieldNames();
   }
 
   public initFormData(): void {
@@ -25,10 +30,20 @@ export class AddDeleteQueryPage {
       value: ['', [Validators.required]],
     });
   }
+
+  public initFieldNames(): void {
+    this.indexService.getIndexFieldNames().subscribe(
+      indexFields =>  {
+        this.indexFields = indexFields;
+        console.log(this.indexFields);
+      });
+  }
+  p
+
   public addDeleteQuery() {
-    const deleteQuery = new DeleteQuery(this.deleteQueryForm.controls['field'].value, this.deleteQueryForm.controls['value'].value);
+    const deleteQuery = <Deletequery>{ 'field': this.deleteQueryForm.controls['field'].value, 'value': this.deleteQueryForm.controls['value'].value };
     this.deleteQueryService.addDeleteQuery(deleteQuery).subscribe(
-      succ => { console.log('1'); this.navCtrl.pop(); },
+      succ => this.navCtrl.pop(),
       err => this.presentAlert()
     );
 
