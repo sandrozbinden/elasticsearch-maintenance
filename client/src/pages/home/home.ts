@@ -20,7 +20,7 @@ export class HomePage {
   public ionViewWillEnter(): void {
     this.deleteQueryService.getDeleteQueries().subscribe(
       deleteQueries =>  {
-        this.deleteQueries = deleteQueries._embedded.deletequery;
+        this.deleteQueries = deleteQueries._embedded.deleteQueries;
         this.nextPage = deleteQueries._links.next;
       });
   }
@@ -41,7 +41,7 @@ export class HomePage {
     } else {
       this.deleteQueryService.getNextDeleteQueries(this.nextPage.href).subscribe(
         deleteQueries => {
-          this.deleteQueries = this.deleteQueries.concat(deleteQueries._embedded.deletequery);
+          this.deleteQueries = this.deleteQueries.concat(deleteQueries._embedded.deleteQueries);
           this.nextPage = deleteQueries._links.next;
           infiniteScroll.complete();
         });

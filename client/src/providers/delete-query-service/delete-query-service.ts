@@ -13,7 +13,7 @@ export class DeleteQueryService {
   constructor(public http: Http) { }
 
   public getDeleteQueries(): Observable<DeleteQueryResponse> {
-    return this.http.get('/deletequery?size=50').map(response => response.json());
+    return this.http.get('/deleteQueries?size=50').map(response => response.json());
   }
 
   public getNextDeleteQueries(deleteQueryPageURL: string): Observable<DeleteQueryResponse> {
@@ -22,7 +22,7 @@ export class DeleteQueryService {
 
   public addDeleteQuery(deleteQuery: Deletequery): Observable<Response> {
     const headers = new Headers({'Content-Type': 'application/json'});
-    return this.http.post('/deletequery', JSON.stringify(deleteQuery), { headers: headers });
+    return this.http.post('/deleteQueries', JSON.stringify(deleteQuery), { headers: headers });
   }
 
   public removeDeleteQuery(deleteQueryURL: string): Observable<Response> {

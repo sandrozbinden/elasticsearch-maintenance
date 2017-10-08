@@ -18,7 +18,7 @@ export interface Deletequery {
 }
 
 export interface Embedded {
-    deletequery: Deletequery[];
+    deleteQueries: Deletequery[];
 }
 
 export interface First {
