@@ -7,6 +7,8 @@ import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse;
 import org.elasticsearch.action.admin.indices.forcemerge.ForceMergeAction;
 import org.elasticsearch.action.admin.indices.forcemerge.ForceMergeResponse;
+import org.elasticsearch.action.search.SearchAction;
+import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.cluster.metadata.IndexMetaData;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -68,14 +70,14 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
 	}
 
 	@Override
-	public void deleteByQuery(QueryBuilder matchQuery) {
+	public void deleteByQuery(QueryBuilder query) {
 		String[] indexNames = Iterables.toArray(getIndexNames(), String.class);
-		BulkByScrollResponse response = DeleteByQueryAction.INSTANCE.newRequestBuilder(client).filter(matchQuery)
+		BulkByScrollResponse response = DeleteByQueryAction.INSTANCE.newRequestBuilder(client).filter(query)
 				.source(indexNames).get();
 		long deleted = response.getDeleted();
 		LOG.info("Deleted {} entries on {} indicies", deleted, indexNames.length);
 	}
-
+	
 	@Override
 	public void expungeDeletes() {
 		String[] indexNames = Iterables.toArray(getIndexNames(), String.class);
@@ -83,5 +85,10 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
 				.setIndices(indexNames).setOnlyExpungeDeletes(true).get();
 		LOG.info("Force Merge Response succeed shards: {} failed  shards: {} ",
 				forceMergeResponse.getSuccessfulShards(), forceMergeResponse.getFailedShards());
+	}
+	
+	@Override
+	public SearchResponse findByQuery(QueryBuilder query) {
+		return SearchAction.INSTANCE.newRequestBuilder(client).setQuery(query).get();
 	}
 }

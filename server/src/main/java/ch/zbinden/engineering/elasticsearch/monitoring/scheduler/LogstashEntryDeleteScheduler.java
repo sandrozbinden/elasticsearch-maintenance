@@ -1,6 +1,5 @@
 package ch.zbinden.engineering.elasticsearch.monitoring.scheduler;
 
-import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.QueryStringQueryBuilder;
 import org.slf4j.Logger;
