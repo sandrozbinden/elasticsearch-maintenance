@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Add New Alert Query</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <form [formGroup]="alertQueryForm" (ngSubmit)="addAlertQuery()">
+    <ion-item>
+      <ion-label>Field:</ion-label>
+      <ion-select formControlName="field">
+        <ion-option *ngFor="let indexField of indexFields" [value]="indexField.name">
+          {{ indexField.name }}
+        </ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Value:</ion-label>
+      <ion-input placeholder="193.169.83.1" formControlName="value"></ion-input>
+    </ion-item>
+    <button ion-button>Add</button>
+  </form>
+</ion-content>
