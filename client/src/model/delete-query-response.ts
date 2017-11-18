@@ -12,8 +12,7 @@ export interface Links {
 }
 
 export interface Deletequery {
-    field: string;
-    value: string;
+    query: string;
     _links?: Links;
 }
 

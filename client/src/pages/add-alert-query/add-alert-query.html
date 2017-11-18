@@ -7,17 +7,10 @@
 
 <ion-content padding>
   <form [formGroup]="alertQueryForm" (ngSubmit)="addAlertQuery()">
+    <p>Please enter a query according to the Lucene Syntax. This is the same syntaxt as in the Kibana explore option</p>
     <ion-item>
-      <ion-label>Field:</ion-label>
-      <ion-select formControlName="field">
-        <ion-option *ngFor="let indexField of indexFields" [value]="indexField.name">
-          {{ indexField.name }}
-        </ion-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label>Value:</ion-label>
-      <ion-input placeholder="193.169.83.1" formControlName="value"></ion-input>
+      <ion-label>Lucene Delete Query:</ion-label>
+      <ion-input placeholder="syslog_hostname:rubin AND syslog_message:zueri" formControlName="query"></ion-input>
     </ion-item>
     <button ion-button>Add</button>
   </form>

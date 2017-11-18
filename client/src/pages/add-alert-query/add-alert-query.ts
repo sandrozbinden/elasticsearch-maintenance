@@ -26,8 +26,8 @@ export class AddAlertQueryPage {
 
   public initFormData(): void {
     this.alertQueryForm = this.formBuilder.group({
-      field: ['', [Validators.required]],
-      value: ['', [Validators.required]],
+      query: ['', [Validators.required]],
+
     });
   }
 
@@ -41,7 +41,7 @@ export class AddAlertQueryPage {
   p
 
   public addAlertQuery() {
-    const alertQuery = <Alertquery>{ 'field': this.alertQueryForm.controls['field'].value, 'value': this.alertQueryForm.controls['value'].value };
+    const alertQuery = <Alertquery>{ 'query': this.alertQueryForm.controls['query'].value };
     this.alertQueryService.addAlertQuery(alertQuery).subscribe(
       succ => this.navCtrl.pop(),
       err => this.presentAlert()

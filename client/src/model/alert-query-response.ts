@@ -12,8 +12,7 @@ export interface Links {
 }
 
 export interface Alertquery {
-    field: string;
-    value: string;
+    query: string;
     _links?: Links;
 }
 

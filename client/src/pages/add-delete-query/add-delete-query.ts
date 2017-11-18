@@ -26,8 +26,7 @@ export class AddDeleteQueryPage {
 
   public initFormData(): void {
     this.deleteQueryForm = this.formBuilder.group({
-      field: ['', [Validators.required]],
-      value: ['', [Validators.required]],
+      query: ['', [Validators.required]],
     });
   }
 
@@ -35,13 +34,12 @@ export class AddDeleteQueryPage {
     this.indexService.getIndexFieldNames().subscribe(
       indexFields =>  {
         this.indexFields = indexFields;
-        console.log(this.indexFields);
       });
   }
   p
 
   public addDeleteQuery() {
-    const deleteQuery = <Deletequery>{ 'field': this.deleteQueryForm.controls['field'].value, 'value': this.deleteQueryForm.controls['value'].value };
+    const deleteQuery = <Deletequery>{ 'query': this.deleteQueryForm.controls['query'].value};
     this.deleteQueryService.addDeleteQuery(deleteQuery).subscribe(
       succ => this.navCtrl.pop(),
       err => this.presentAlert()

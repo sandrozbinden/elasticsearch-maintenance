@@ -11,25 +11,16 @@ public class DeleteQuery {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	private String field;
-	private String value;
+	private String query;
 
 	protected DeleteQuery() {
 	}
-
-	public String getField() {
-		return field;
+	
+	public void setQuery(String query) {
+		this.query = query;
 	}
-
-	public void setField(String field) {
-		this.field = field;
-	}
-
-	public String getValue() {
-		return value;
-	}
-
-	public void setValue(String value) {
-		this.value = value;
+	
+	public String getQuery() {
+		return query;
 	}
 }
