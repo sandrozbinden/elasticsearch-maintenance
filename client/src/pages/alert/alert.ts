@@ -1,7 +1,6 @@
+import { Alert, Next } from './../../model/alert-response';
+import { AlertService } from './../../providers/alert-service/alert-service';
 
-import { Alertquery, Next } from './../../model/alert-query-response';
-import { AddAlertQueryPage } from './../add-alert-query/add-alert-query';
-import { AlertQueryService } from './../../providers/alert-query-service/alert-query-service';
 import { Component } from '@angular/core';
 import { NavController, InfiniteScroll } from 'ionic-angular';
 
@@ -12,28 +11,24 @@ import { NavController, InfiniteScroll } from 'ionic-angular';
 export class AlertPage {
 
 
-  public alertQueries: Alertquery[] = [];
+  public alerts: Alert[] = [];
   public nextPage: Next;
 
-  constructor(public navCtrl: NavController, public alertQueryService: AlertQueryService) {
+  constructor(public navCtrl: NavController, public alertService: AlertService) {
 
   }
 
   public ionViewWillEnter(): void {
-    this.alertQueryService.getAlertQueries().subscribe(
-      alertQueries =>  {
-        this.alertQueries = alertQueries._embedded.alertQueries;
-        this.nextPage = alertQueries._links.next;
+    this.alertService.getAlerts().subscribe(
+      alerts =>  {
+        this.alerts = alerts._embedded.alerts.filter(alert => alert.alertStatus === 'OPEN');
+        this.nextPage = alerts._links.next;
       });
   }
 
-  public addAlertQuery() {
-    this.navCtrl.push(AddAlertQueryPage);
-  }
-
-  public removeAlertQuery(alertQuery: Alertquery) {
-    this.alertQueryService.removeAlertQuery(alertQuery._links.self.href).subscribe(
-      succ => this.alertQueries = this.alertQueries.filter(d => d !== alertQuery),
+  public completeAlert(alert: Alert) {
+    this.alertService.completeAlert(alert).subscribe(
+      succ => this.alerts = this.alerts.filter(d => d !== alert)
     );
   }
 
@@ -41,9 +36,9 @@ export class AlertPage {
     if (this.nextPage === undefined) {
       infiniteScroll.enable(false);
     } else {
-      this.alertQueryService.getNextAlertQueries(this.nextPage.href).subscribe(
+      this.alertService.getNextAlerts(this.nextPage.href).subscribe(
         alertQueries => {
-          this.alertQueries = this.alertQueries.concat(alertQueries._embedded.alertQueries);
+          this.alerts = this.alerts.concat(alertQueries._embedded.alerts.filter(alert => alert.alertStatus === 'OPEN'));
           this.nextPage = alertQueries._links.next;
           infiniteScroll.complete();
         });

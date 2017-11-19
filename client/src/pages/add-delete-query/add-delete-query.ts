@@ -26,7 +26,7 @@ export class AddDeleteQueryPage {
 
   public initFormData(): void {
     this.deleteQueryForm = this.formBuilder.group({
-      query: ['query', [Validators.required]],
+      query: ['', [Validators.required]],
     });
   }
 

@@ -1,3 +1,5 @@
+import { DeleteQueryPage } from './../pages/delete-query/delete-query';
+import { AlertService } from './../providers/alert-service/alert-service';
 import { AlertQueryService } from './../providers/alert-query-service/alert-query-service';
 import { AlertPage } from './../pages/alert/alert';
 import { IndexService } from './../providers/index-service/index-service';
@@ -7,25 +9,22 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
-import { ContactPage } from '../pages/contact/contact';
-import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { DeleteQueryService } from '../providers/delete-query-service/delete-query-service';
 import { HttpModule } from '@angular/http';
-import { IndexPage } from '../pages/index/index';
 import { AddAlertQueryPage } from '../pages/add-alert-query/add-alert-query';
+import { AlertQueryPage } from '../pages/alert-query/alert-query';
 
 @NgModule({
   declarations: [
     MyApp,
-    IndexPage,
-    ContactPage,
-    HomePage,
     TabsPage,
     AlertPage,
+    AlertQueryPage,
+    DeleteQueryPage,    
     AddAlertQueryPage,
     AddDeleteQueryPage,
   ],
@@ -37,11 +36,10 @@ import { AddAlertQueryPage } from '../pages/add-alert-query/add-alert-query';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    IndexPage,
-    ContactPage,
-    HomePage,
     TabsPage,
     AlertPage,
+    AlertQueryPage,
+    DeleteQueryPage,
     AddAlertQueryPage,
     AddDeleteQueryPage
   ],
@@ -49,6 +47,7 @@ import { AddAlertQueryPage } from '../pages/add-alert-query/add-alert-query';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
+    AlertService,
     DeleteQueryService,
     AlertQueryService,
     IndexService

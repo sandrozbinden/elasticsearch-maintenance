@@ -1,17 +1,17 @@
+import { AlertQueryPage } from './../alert-query/alert-query';
 import { Component } from '@angular/core';
 
 import { AlertPage } from './../alert/alert';
-import { AboutPage } from '../about/about';
-import { HomePage } from '../home/home';
+import { DeleteQueryPage } from '../delete-query/delete-query';
 
 @Component({
   templateUrl: 'tabs.html'
 })
 export class TabsPage {
 
-  tab1Root = HomePage;
-  tab2Root = AboutPage;
-  tab3Root = AlertPage;
+  tab1Root = AlertPage;
+  tab2Root = DeleteQueryPage;
+  tab3Root = AlertQueryPage;
 
   constructor() {
 

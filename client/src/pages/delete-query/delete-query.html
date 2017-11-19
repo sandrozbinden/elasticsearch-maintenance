@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Delete Query</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="addDeleteQuery()"  color="primary">
+        <ion-icon name="add-circle"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <p>Overview of queries that will be used to delete from the ElasticSearch index.</p>
+  <ion-infinite-scroll (ionInfinite)="infiniteEntries($event)">
+    <ion-list>
+      <ion-item *ngFor="let deleteQuery of deleteQueries">
+        <div>{{deleteQuery.query}}</div>
+        <button ion-button (click)="removeDeleteQuery(deleteQuery)" item-right>
+          <ion-icon name="remove-circle"></ion-icon>
+        </button>
+      </ion-item>
+    </ion-list>
+    <ion-infinite-scroll-content loadingText="Load more entries"></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

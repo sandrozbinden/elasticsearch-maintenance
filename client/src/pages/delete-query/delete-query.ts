@@ -4,11 +4,12 @@ import { DeleteQueryService } from './../../providers/delete-query-service/delet
 import { Component } from '@angular/core';
 import { NavController, InfiniteScroll } from 'ionic-angular';
 
+
 @Component({
-  selector: 'page-home',
-  templateUrl: 'home.html'
+  selector: 'page-delete-query',
+  templateUrl: 'delete-query.html',
 })
-export class HomePage {
+export class DeleteQueryPage {
 
   public deleteQueries: Deletequery[] = [];
   public nextPage: Next;
@@ -47,5 +48,6 @@ export class HomePage {
         });
     }
   }
+
 
 }

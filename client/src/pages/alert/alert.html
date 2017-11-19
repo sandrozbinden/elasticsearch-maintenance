@@ -1,22 +1,20 @@
-<ion-content padding>
-  <h2>Alert Query</h2>
-  <p>Add a Query if the Query Hits any Results an Alert will be sent via E-Mail.</p>
-  <ion-infinite-scroll (ionInfinite)="infiniteEntries($event)">
-    <ion-grid>
-      <ion-row *ngFor="let alertQuery of alertQueries">
-        <ion-col>
-          <div>{{alertQuery.query}}</div>
-        </ion-col>
-        <ion-col>
-          <div>
-            <button (tap)="removeAlertQuery(alertQuery)" ion-button icon-only>
-                  <ion-icon name="remove-circle"></ion-icon>
-                </button>
-          </div>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-    <ion-infinite-scroll-content loadingText="Load more entries"></ion-infinite-scroll-content>
-  </ion-infinite-scroll>
-  <button ion-button (tap)="addAlertQuery()">Add Alert Query</button>
-</ion-content>
+<ion-header>
+    <ion-navbar>
+      <ion-title>Alert</ion-title>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content padding>
+    <p>Show current Alerts</p>
+    <ion-infinite-scroll (ionInfinite)="infiniteEntries($event)">
+      <ion-list>
+        <ion-item *ngFor="let alert of alerts">
+          <div>{{alert.query}}</div>
+          <button ion-button (click)="completeAlert(alert)" item-right>
+            <ion-icon name="checkmark-circle"></ion-icon>
+          </button>
+        </ion-item>
+      </ion-list>
+      <ion-infinite-scroll-content loadingText="Load more entries"></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </ion-content>
