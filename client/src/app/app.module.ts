@@ -17,6 +17,7 @@ import { DeleteQueryService } from '../providers/delete-query-service/delete-que
 import { HttpModule } from '@angular/http';
 import { AddAlertQueryPage } from '../pages/add-alert-query/add-alert-query';
 import { AlertQueryPage } from '../pages/alert-query/alert-query';
+import { PipesModule } from '../pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { AlertQueryPage } from '../pages/alert-query/alert-query';
   imports: [
     BrowserModule,
     HttpModule,
+    PipesModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],

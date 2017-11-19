@@ -13,4 +13,8 @@ export class IndexService {
   public getIndexFieldNames(): Observable<IndexField[]> {
     return this.http.get('/index/fields').map(response => response.json());
   }
+
+  public getIndciesSize(): Observable<number> {
+    return this.http.get('/index/size').map(response => response.json());
+  }
 }

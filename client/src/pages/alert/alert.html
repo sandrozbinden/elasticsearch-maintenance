@@ -5,6 +5,7 @@
   </ion-header>
   
   <ion-content padding>
+    <p>Current Indicies Size {{ indiciesSize |  fileSize}}</p>
     <p>Show current Alerts</p>
     <ion-infinite-scroll (ionInfinite)="infiniteEntries($event)">
       <ion-list>

@@ -1,3 +1,4 @@
+import { IndexService } from './../../providers/index-service/index-service';
 import { Alert, Next } from './../../model/alert-response';
 import { AlertService } from './../../providers/alert-service/alert-service';
 
@@ -13,17 +14,21 @@ export class AlertPage {
 
   public alerts: Alert[] = [];
   public nextPage: Next;
+  public indiciesSize: number;
 
-  constructor(public navCtrl: NavController, public alertService: AlertService) {
+  constructor(public navCtrl: NavController, public alertService: AlertService, public indexService: IndexService) {
 
   }
 
   public ionViewWillEnter(): void {
     this.alertService.getAlerts().subscribe(
-      alerts =>  {
+      alerts => {
         this.alerts = alerts._embedded.alerts.filter(alert => alert.alertStatus === 'OPEN');
         this.nextPage = alerts._links.next;
       });
+    this.indexService.getIndciesSize().subscribe(
+      indiciesSize => this.indiciesSize = indiciesSize
+    );
   }
 
   public completeAlert(alert: Alert) {
