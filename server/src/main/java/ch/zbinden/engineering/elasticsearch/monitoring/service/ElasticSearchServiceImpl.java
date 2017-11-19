@@ -7,6 +7,7 @@ import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse;
 import org.elasticsearch.action.admin.indices.forcemerge.ForceMergeAction;
 import org.elasticsearch.action.admin.indices.forcemerge.ForceMergeResponse;
+import org.elasticsearch.action.admin.indices.stats.IndicesStatsResponse;
 import org.elasticsearch.action.search.SearchAction;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
@@ -76,6 +77,12 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
 				.source(indexNames).get();
 		long deleted = response.getDeleted();
 		LOG.info("Deleted {} entries on {} indicies", deleted, indexNames.length);
+	}
+	
+	@Override
+	public long getIndiciesSizeInBytes() {
+		IndicesStatsResponse indicesStatsResponse = client.admin().indices().prepareStats().setStore(true).get();
+		return indicesStatsResponse.getTotal().getStore().getSizeInBytes();
 	}
 	
 	@Override

@@ -32,4 +32,10 @@ public class IndexController {
 				.map(name -> new IndexFieldJSON(name)).collect(Collectors.toList());
 
 	}
+	
+	@RequestMapping("/index/size")
+	public long indexSizeInBytes() {
+		return esService.getIndiciesSizeInBytes();
+
+	}
 }

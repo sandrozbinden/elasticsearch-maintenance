@@ -24,4 +24,6 @@ public interface ElasticSearchService {
 
 	SearchResponse findByQuery(QueryBuilder query);
 
+	long getIndiciesSizeInBytes();
+
 }
