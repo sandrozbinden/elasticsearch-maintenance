@@ -58,7 +58,7 @@ public class AlertServiceScheduler {
 				if (!alertRepository.findByQueryAndAlertStatus(alertQuery, AlertStatus.OPEN).isPresent()) {
 					Alert alert = new Alert(alertQuery);
 					alertRepository.save(alert);
-					mailClient.sendAlertMessageForQuery(alertQuery.getQuery());
+					mailClient.sendAlertMessageForQuery(alertQuery);
 				}
 			}
 		}
