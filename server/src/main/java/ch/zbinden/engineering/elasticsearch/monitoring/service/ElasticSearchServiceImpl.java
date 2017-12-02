@@ -95,7 +95,8 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
 	}
 	
 	@Override
-	public SearchResponse findByQuery(QueryBuilder query) {
-		return SearchAction.INSTANCE.newRequestBuilder(client).setQuery(query).get();
+	public SearchResponse findByQuery(QueryBuilder query, String... indicies) {
+		return SearchAction.INSTANCE.newRequestBuilder(client).setIndices(indicies).setQuery(query).get();
 	}
+
 }

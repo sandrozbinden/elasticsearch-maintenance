@@ -22,8 +22,8 @@ public interface ElasticSearchService {
 
 	void deleteByQuery(QueryBuilder matchQuery);
 
-	SearchResponse findByQuery(QueryBuilder query);
-
 	long getIndiciesSizeInBytes();
+
+	SearchResponse findByQuery(QueryBuilder query, String... indicies);
 
 }
