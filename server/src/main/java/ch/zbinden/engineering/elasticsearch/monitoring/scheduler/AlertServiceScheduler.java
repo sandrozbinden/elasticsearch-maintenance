@@ -1,16 +1,9 @@
 package ch.zbinden.engineering.elasticsearch.monitoring.scheduler;
 
-import static org.elasticsearch.index.query.QueryBuilders.boolQuery;
-
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import javax.mail.MessagingException;
-
+import ch.zbinden.engineering.elasticsearch.monitoring.domain.*;
+import ch.zbinden.engineering.elasticsearch.monitoring.mail.MailClient;
+import ch.zbinden.engineering.elasticsearch.monitoring.service.ElasticSearchService;
+import com.google.common.collect.Lists;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -22,15 +15,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.google.common.collect.Lists;
+import javax.mail.MessagingException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
-import ch.zbinden.engineering.elasticsearch.monitoring.domain.Alert;
-import ch.zbinden.engineering.elasticsearch.monitoring.domain.AlertQuery;
-import ch.zbinden.engineering.elasticsearch.monitoring.domain.AlertQueryRepository;
-import ch.zbinden.engineering.elasticsearch.monitoring.domain.AlertRepository;
-import ch.zbinden.engineering.elasticsearch.monitoring.domain.AlertStatus;
-import ch.zbinden.engineering.elasticsearch.monitoring.mail.MailClient;
-import ch.zbinden.engineering.elasticsearch.monitoring.service.ElasticSearchService;
+import static org.elasticsearch.index.query.QueryBuilders.boolQuery;
 
 @Component
 public class AlertServiceScheduler {
@@ -67,9 +59,9 @@ public class AlertServiceScheduler {
 	}
 
 	private String[] getTodayAndYesterdaysIndex() {
-		SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd");
-		String logstashIndexToday = "logstash-" + df.format(LocalDate.now());
-		String logstashIndexYesterday = "logstash-" + df.format(LocalDate.now().minusDays(1));
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
+		String logstashIndexToday = "logstash-" + LocalDate.now().format(dateTimeFormatter);
+		String logstashIndexYesterday = "logstash-" + LocalDate.now().minusDays(1).format(dateTimeFormatter);
 		return new String[] { logstashIndexToday, logstashIndexYesterday };
 	}
 
